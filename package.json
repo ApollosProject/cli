@@ -10,7 +10,7 @@
   },
   "scripts": {
     "release": "standard-version && git push --follow-tags && npm publish",
-    "postversion": "git push --follow-tags && npm publish && gh-release"
+    "postversion": "git push --follow-tags && npm publish && gh-release --yes"
   },
   "author": "",
   "publishConfig": {
@@ -22,7 +22,7 @@
   },
   "standard-version": {
     "scripts": {
-      "postchangelog": "sed -i.bak \"s/### \\[/## \\[/g\" CHANGELOG.md"
+      "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md"
     }
   },
   "dependencies": {
