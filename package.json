@@ -1,0 +1,27 @@
+{
+  "name": "@apollosproject/cli",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "apollos": "./index.js"
+  },
+  "author": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "peerDependencies": {
+    "@apollosproject/react-native-make": "^3.0.5"
+  },
+  "dependencies": {
+    "canvas": "^2.9.0",
+    "commander": "^8.0.0",
+    "consola": "^2.15.3",
+    "execa": "^6.0.0",
+    "ora": "^6.1.0",
+    "prompts": "^2.4.2",
+    "tmp": "^0.2.1"
+  }
+}
