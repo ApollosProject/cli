@@ -1,6 +1,7 @@
 {
   "name": "@apollosproject/cli",
   "version": "0.0.2",
+  "repository": "github:apollosproject/cli",
   "description": "",
   "type": "module",
   "main": "index.js",
@@ -8,7 +9,8 @@
     "apollos": "./index.js"
   },
   "scripts": {
-    "release": "standard-version && git push --follow-tags && npm publish"
+    "release": "standard-version && git push --follow-tags && npm publish",
+    "postversion": "git push --follow-tags && npm publish && gh-release"
   },
   "author": "",
   "publishConfig": {
@@ -17,6 +19,11 @@
   "license": "ISC",
   "peerDependencies": {
     "@apollosproject/react-native-make": "^3.0.5"
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "sed -i.bak \"s/### \\[/## \\[/g\" CHANGELOG.md"
+    }
   },
   "dependencies": {
     "canvas": "^2.9.0",
@@ -28,6 +35,7 @@
     "tmp": "^0.2.1"
   },
   "devDependencies": {
+    "gh-release": "^6.0.4",
     "standard-version": "^9.3.2"
   }
 }
