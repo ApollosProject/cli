@@ -18,7 +18,7 @@ const exec = util.promisify(baseExec);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 program.name("apollos");
-program.version("1.0.0");
+program.version("0.0.2");
 
 const mobile = program
   .command("mobile")
