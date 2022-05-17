@@ -58,6 +58,11 @@ GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_KEY" >.env
 cp .env .env.shared
 npx @apollosproject/apollos-cli secrets -e "$ENCRYPTION_KEY"
 
+git init
+git add .
+git commit -am "first commit"
+git tag "v1.0.0"
+
 node scripts/get-introspection-data.js
 
 mv "$TMP_DIR/$PROJ" "$DIR/$PROJ"
