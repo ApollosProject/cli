@@ -31,9 +31,10 @@ if [ ! -d "fastlane/metadata/android/en-US/changelogs" ]; then
   echo "bug fixes and performance improvements" >fastlane/metadata/android/en-US/changelogs/default.txt
 fi
 
-# TODO fix this
-# it currently doesn't output to any changelog file
-# fastlane run changelog_from_git_commits
+# TODO fix, this is only showing the most recent commit
+fastlane run changelog_from_git_commits quiet:true |
+  grep Result |
+  sed -E "s/.*Result: (.*)/\1/" >"fastlane/metadata/android/en-US/changelogs/$COMMITS.txt"
 
 if [ "$TRACK" = "internal" ]; then
   fastlane run supply \
