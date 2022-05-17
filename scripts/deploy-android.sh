@@ -16,6 +16,7 @@ PACKAGE=$(grep applicationId android/app/build.gradle | sed -E "s/.*applicationI
 if [ "$TRACK" = "internal" ]; then
   fastlane run supply \
     track:$TRACK \
+    version_code:$COMMITS \
     skip_upload_apk:true \
     json_key:fastlane/google-api-key.json \
     package_name:$PACKAGE
