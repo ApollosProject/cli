@@ -6,6 +6,11 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
+if [ -z "$(git rev-list --tags)" ]; then
+  echo "Must have at least one git tag for the changelog!"
+  exit 1
+fi
+
 COMMITS=$(git rev-list --count HEAD)
 sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $COMMITS/g" android/app/build.gradle
 fastlane run gradle task:clean project_dir:android
