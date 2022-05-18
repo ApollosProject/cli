@@ -13,8 +13,6 @@ fi
 
 COMMITS=$(git rev-list --count HEAD)
 sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $COMMITS/g" android/app/build.gradle
-fastlane run gradle task:clean project_dir:android
-fastlane run gradle task:bundle build_type:Release project_dir:android
 
 PACKAGE=$(grep applicationId android/app/build.gradle | sed -E "s/.*applicationId[[:space:]]+\"(.*)\".*/\1/")
 
@@ -32,11 +30,14 @@ if [ ! -d "fastlane/metadata/android/en-US/changelogs" ]; then
 fi
 
 # TODO fix, this is only showing the most recent commit
-fastlane run changelog_from_git_commits quiet:true |
-  grep Result |
-  sed -E "s/.*Result: (.*)/\1/" >"fastlane/metadata/android/en-US/changelogs/$COMMITS.txt"
+# and we don't want the git commit making it to production
+#fastlane run changelog_from_git_commits quiet:true |
+#grep Result |
+#sed -E "s/.*Result: (.*)/\1/" >"fastlane/metadata/android/en-US/changelogs/$COMMITS.txt"
 
 if [ "$TRACK" = "internal" ]; then
+  fastlane run gradle task:clean project_dir:android
+  fastlane run gradle task:bundle build_type:Release project_dir:android
   fastlane run supply \
     track:$TRACK \
     version_code:$COMMITS \
