@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.14](https://github.com/apollosproject/cli/compare/v0.0.13...v0.0.14) (2022-05-19)
+
+
+### Bug Fixes
+
+* working android deploys ([8ca82f8](https://github.com/apollosproject/cli/commit/8ca82f8534efe0addf37a7e602b425766facfee2))
+
 ## [0.0.13](https://github.com/apollosproject/cli/compare/v0.0.12...v0.0.13) (2022-05-19)
 
 ## [0.0.12](https://github.com/apollosproject/cli/compare/v0.0.11...v0.0.12) (2022-05-19)
