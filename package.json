@@ -22,7 +22,7 @@
   "standard-version": {
     "scripts": {
       "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md",
-      "posttag": "git push && git push --follow-tags && gh-release --yes"
+      "posttag": "git push && git push --follow-tags && yarn publish . --tag \"v$NPM_PACKAGE_VERSION\" && gh-release --yes"
     }
   },
   "dependencies": {
