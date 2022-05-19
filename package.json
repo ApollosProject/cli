@@ -9,8 +9,7 @@
     "apollos": "./index.js"
   },
   "scripts": {
-    "release": "standard-version && git push --follow-tags && npm publish",
-    "postversion": "git push --follow-tags && npm publish && gh-release --yes"
+    "release": "standard-version"
   },
   "author": "",
   "publishConfig": {
@@ -22,7 +21,9 @@
   },
   "standard-version": {
     "scripts": {
-      "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md"
+      "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md",
+      "postcommit": "git push",
+      "posttag": "git push --tags && yarn publish . --tag $npm_package_version && gh-release --yes"
     }
   },
   "dependencies": {
