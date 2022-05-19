@@ -22,6 +22,7 @@
   "standard-version": {
     "scripts": {
       "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md",
+      "postcommit": "git push",
       "posttag": "gh-release --yes"
     }
   },
