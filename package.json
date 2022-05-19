@@ -1,6 +1,6 @@
 {
   "name": "@apollosproject/cli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": "github:apollosproject/cli",
   "description": "",
   "type": "module",
