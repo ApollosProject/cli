@@ -115,8 +115,7 @@ export default () => {
     .command('publish')
     .description('Publish app to App Store')
     .addArgument(iosTrack)
-    .addArgument(buildNumber)
-    .action(async (track, buildNumberStrategy) => {
+    .action(async (track) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
         await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track]);
