@@ -111,10 +111,6 @@ export default () => {
     .choices(['internal', 'beta', 'production'])
     .default('internal');
 
-  const buildNumber = new Argument('[build number strategy]')
-    .choices(['commit_number', 'timestamp'])
-    .default('commit_number');    
-
   ios
     .command('publish')
     .description('Publish app to App Store')
@@ -123,7 +119,7 @@ export default () => {
     .action(async (track, buildNumberStrategy) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track, buildNumberStrategy]);
+        await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track]);
       } catch (e) {
         spinner.fail('Failed');
         consola.log(e.stdout);
