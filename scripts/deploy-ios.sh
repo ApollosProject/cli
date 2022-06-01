@@ -11,17 +11,11 @@ APP_ID=$(grep "PRODUCT_BUNDLE_IDENTIFIER.*One" ios/*.xcodeproj/project.pbxproj |
   sed -E "s/.*PRODUCT_BUNDLE_IDENTIFIER = \"?(.*).One.*/\1/")
 
 TARGET=$(grep "target" ios/Podfile | sed -n 1p | sed -E "s/target '(.*)'.*/\1/")
-COMMITS=$(git rev-list --count HEAD)
+BUILD_NUMBER=$(git rev-list --count HEAD)
 TIMESTAMP=$(date +"%s")
 VERSION=$(NO_COLOR=1 fastlane run get_version_number xcodeproj:ios target:$TARGET |
   grep Result |
   sed -E "s/.*Result: ([\d\.]*)/\1/")
-
-case "$2" in
- timestamp) BUILD_NUMBER=$TIMESTAMP ;;
- *) BUILD_NUMBER=$COMMITS ;;
-esac
-
 
 fastlane run setup_ci
 
