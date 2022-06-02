@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.15](https://github.com/apollosproject/cli/compare/v0.0.14...v0.0.15) (2022-06-02)
+
+
+### Bug Fixes
+
+* adds android offsets and skips metadata and fixes ios beta deploys ([0604a5a](https://github.com/apollosproject/cli/commit/0604a5ae22ca4900524b90b473780d3f88c24b14))
+
 ## [0.0.14](https://github.com/apollosproject/cli/compare/v0.0.13...v0.0.14) (2022-05-19)
 
 
