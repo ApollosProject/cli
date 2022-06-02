@@ -6,7 +6,7 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-if [ -z "$(grep DELIVER_APP_IDENTIFIER .env)" ]; then
+if [ -z "$(grep FASTLANE_TEAM_ID .env)" ]; then
   echo "Apollos iOS deployments not setup correctly!"
   exit 1
 fi
