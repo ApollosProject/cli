@@ -11,6 +11,11 @@ if [ -z "$(git rev-list --tags)" ]; then
   exit 1
 fi
 
+if [ -z "$(grep KEYSTORE_FILE .env)" ]; then
+  echo "Apollos Android deployments not setup correctly!"
+  exit 1
+fi
+
 COMMITS=$(git rev-list --count HEAD)
 sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $COMMITS/g" android/app/build.gradle
 

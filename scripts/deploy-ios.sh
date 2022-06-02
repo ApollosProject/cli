@@ -6,6 +6,11 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
+if [ -z "$(grep DELIVER_APP_IDENTIFIER .env)" ]; then
+  echo "Apollos iOS deployments not setup correctly!"
+  exit 1
+fi
+
 APP_ID=$(grep "PRODUCT_BUNDLE_IDENTIFIER.*One" ios/*.xcodeproj/project.pbxproj |
   sed -n 1p |
   sed -E "s/.*PRODUCT_BUNDLE_IDENTIFIER = \"?(.*).One.*/\1/")
