@@ -34,9 +34,12 @@ if [ "$TRACK" = "internal" ]; then
   fastlane run testflight api_key_path:fastlane/apple-api-key.json
 elif [ "$TRACK" = "beta" ]; then
   fastlane run testflight api_key_path:fastlane/apple-api-key.json \
+    app_identifier:"$APP_ID" \
     distribute_only:true \
     distribute_external:true \
-    groups:"Beta Testers"
+    groups:"Beta Testers" \
+    app_platform:ios \
+    build_number:"$BUILD_NUMBER"
 elif [ "$TRACK" = "production" ]; then
   fastlane deliver --api_key_path fastlane/apple-api-key.json \
     --skip_binary_upload true \

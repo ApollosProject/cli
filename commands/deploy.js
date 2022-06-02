@@ -1,96 +1,95 @@
-import fs from 'fs';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { execa } from 'execa';
-import prompts from 'prompts';
-import { Command, Argument } from 'commander';
-import consola from 'consola';
-import ora from 'ora';
+import fs from "fs";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import { execa } from "execa";
+import prompts from "prompts";
+import { Command, Argument } from "commander";
+import consola from "consola";
+import ora from "ora";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default () => {
-  const deploy = new Command('deploy');
-  deploy.description('Manage deployments');
+  const deploy = new Command("deploy");
+  deploy.description("Manage deployments");
 
-  const ios = new Command('ios');
-  ios.description('Manage iOS deployments');
+  const ios = new Command("ios");
+  ios.description("Manage iOS deployments");
 
   ios
-    .command('init')
-    .description('Setup iOS deployments')
+    .command("init")
+    .description("Setup iOS deployments")
     .action(async () => {
       const appleIDquestion = [
         {
-          type: 'text',
-          name: 'appleID',
-          message: 'Admin Apple Developer email?',
+          type: "text",
+          name: "appleID",
+          message: "Admin Apple Developer email?",
         },
       ];
       const questions = [
         {
-          type: 'confirm',
-          name: 'confirm',
-          message: 'Finished with the above commands?',
+          type: "confirm",
+          name: "confirm",
+          message: "Finished with the above commands?",
           initial: true,
         },
         {
-          type: 'text',
-          name: 'certsRepo',
-          message: 'Private Github repo to store certificates?',
+          type: "text",
+          name: "certsRepo",
+          message: "Private Github repo to store certificates?",
           validate: (value) =>
             value.match(/^http.*/)[0] === value ? true : `Must be a valid URL!`,
         },
         {
-          type: 'text',
-          name: 'ghUser',
-          message: 'Github username?',
+          type: "text",
+          name: "ghUser",
+          message: "Github username?",
         },
         {
-          type: 'text',
-          name: 'ghToken',
-          message: 'Github personal access token?',
+          type: "text",
+          name: "ghToken",
+          message: "Github personal access token?",
         },
         {
-          type: 'text',
-          name: 'keyID',
-          message: 'App Store Connect API - Key ID?',
+          type: "text",
+          name: "keyID",
+          message: "App Store Connect API - Key ID?",
         },
         {
-          type: 'text',
-          name: 'issuerID',
-          message: 'App Store Connect API - Issuer ID?',
+          type: "text",
+          name: "issuerID",
+          message: "App Store Connect API - Issuer ID?",
         },
         {
-          type: 'text',
-          name: 'key',
-          message: 'App Store Connect API - P8 file?',
+          type: "text",
+          name: "key",
+          message: "App Store Connect API - P8 file?",
           validate: (value) =>
             fs.existsSync(path.normalize(value)) || "File doesn't exist!",
         },
         {
-          type: 'text',
-          name: 'teamID',
-          message: 'Apple Developer Team ID?',
+          type: "text",
+          name: "teamID",
+          message: "Apple Developer Team ID?",
         },
         {
-          type: 'text',
-          name: 'teamName',
-          message: 'Apple Developer Team Name?',
+          type: "text",
+          name: "teamName",
+          message: "Apple Developer Team Name?",
         },
       ];
       const { appleID } = await prompts(appleIDquestion);
       consola.info(
-        'We use Fastlane for iOS deploys. There are some steps that cannot be automated.'
+        "We use Fastlane for iOS deploys. There are some steps that cannot be automated."
       );
       consola.info(
-        'Run the following commands before proceeding in a separate terminal to create the bundle identifiers:'
+        "Run the following commands before proceeding in a separate terminal to create the bundle identifiers:"
       );
-      const {
-        stdout,
-      } = await execa(`${__dirname}/../scripts/display-ios-setup-commands.sh`, [
-        appleID,
-      ]);
+      const { stdout } = await execa(
+        `${__dirname}/../scripts/display-ios-setup-commands.sh`,
+        [appleID]
+      );
       consola.log(stdout);
       const response = await prompts(questions);
       if (Object.keys(response).length === questions.length) {
@@ -107,39 +106,39 @@ export default () => {
       }
     });
 
-  const iosTrack = new Argument('[track]')
-    .choices(['internal', 'beta', 'production'])
-    .default('internal');
+  const iosTrack = new Argument("[track]")
+    .choices(["internal", "beta", "production"])
+    .default("internal");
 
   ios
-    .command('publish')
-    .description('Publish app to App Store')
+    .command("publish")
+    .description("Publish app to App Store")
     .addArgument(iosTrack)
     .action(async (track) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
         await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track]);
       } catch (e) {
-        spinner.fail('Failed');
+        spinner.fail("Failed");
         consola.log(e.stdout);
         consola.log(e.stderr);
         process.exit(1);
       }
-      spinner.succeed('Deployed!');
+      spinner.succeed("Deployed!");
     });
 
-  const android = new Command('android');
-  android.description('Manage Android deployments');
+  const android = new Command("android");
+  android.description("Manage Android deployments");
 
   android
-    .command('init')
-    .description('Setup Android deployments')
+    .command("init")
+    .description("Setup Android deployments")
     .action(async () => {
       const questions = [
         {
-          type: 'text',
-          name: 'key',
-          message: 'Google Service Account Upload Key?',
+          type: "text",
+          name: "key",
+          message: "Google Service Account Upload Key?",
           validate: (value) =>
             fs.existsSync(path.normalize(value)) || "File doesn't exist!",
         },
@@ -154,29 +153,37 @@ export default () => {
         child.stdout.pipe(process.stdout);
         // Keystore cert credentials
         // we'll just leave them all as "Unknown"
-        child.stdin.write('\n\n\n\n\n\nyes\n');
+        child.stdin.write("\n\n\n\n\n\nyes\n");
         child.stdin.end();
       }
     });
 
-  const androidTrack = new Argument('[track]')
-    .choices(['internal', 'alpha', 'beta', 'production'])
-    .default('internal');
+  const androidTrack = new Argument("[track]")
+    .choices(["internal", "alpha", "beta", "production"])
+    .default("internal");
 
   android
-    .command('publish')
-    .description('Publish app to Google Play Store')
+    .command("publish")
+    .description("Publish app to Google Play Store")
+    .option(
+      "-o, --version-code-offset <offset>",
+      "Uses commits + offset for version code",
+      0
+    )
     .addArgument(androidTrack)
-    .action(async (track) => {
+    .action(async (track, options) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-android.sh`, [track]);
+        await execa(`${__dirname}/../scripts/deploy-android.sh`, [
+          track,
+          options.offset,
+        ]);
       } catch (e) {
-        spinner.fail('Failed');
+        spinner.fail("Failed");
         consola.log(e.stdout);
         process.exit(1);
       }
-      spinner.succeed('Deployed!');
+      spinner.succeed("Deployed!");
     });
 
   deploy.addCommand(ios);

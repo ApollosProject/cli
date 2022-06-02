@@ -1,4 +1,5 @@
 TRACK=$1
+OFFSET=$2
 
 if [ -n "$(git status --porcelain)" ]; then
   echo "Git status not clean!"
@@ -45,8 +46,11 @@ if [ "$TRACK" = "internal" ]; then
   fastlane run gradle task:bundle build_type:Release project_dir:android
   fastlane run supply \
     track:$TRACK \
-    version_code:$COMMITS \
+    version_code:$((COMMITS + OFFSET)) \
     skip_upload_apk:true \
+    skip_upload_metadata:true \
+    skip_upload_images:true \
+    skip_upload_screenshots:true \
     aab:android/app/build/outputs/bundle/release/app-release.aab \
     json_key:fastlane/google-api-key.json \
     package_name:$PACKAGE
@@ -54,9 +58,12 @@ else
   fastlane run supply \
     track:internal \
     track_promote_to:$TRACK \
-    version_code:$COMMITS \
+    version_code:$((COMMITS + OFFSET)) \
     skip_upload_apk:true \
     skip_upload_aab:true \
+    skip_upload_metadata:true \
+    skip_upload_images:true \
+    skip_upload_screenshots:true \
     json_key:fastlane/google-api-key.json \
     package_name:$PACKAGE
 fi
