@@ -60,24 +60,21 @@ export default () => {
       type: 'text',
       name: 'logoPath',
       message: 'Logo file path?',
-      validate: (value) =>
-        fs.existsSync(path.normalize(value)) || "File doesn't exist!",
+      validate: (value) => fs.existsSync(path.normalize(value)) || "File doesn't exist!",
     },
     {
       type: 'text',
       name: 'iconBGColor',
       message: 'Icon background color?',
       initial: '#FFFFFF',
-      validate: (value) =>
-        value.match(/#[a-fA-F0-9]{6}/) || 'Must be a hex color!',
+      validate: (value) => value.match(/#[a-fA-F0-9]{6}/) || 'Must be a hex color!',
     },
     {
       type: 'text',
       name: 'splashBGColor',
       message: 'Splash screen background color?',
       initial: '#FFFFFF',
-      validate: (value) =>
-        value.match(/#[a-fA-F0-9]{6}/) || 'Must be a hex color!',
+      validate: (value) => value.match(/#[a-fA-F0-9]{6}/) || 'Must be a hex color!',
     },
   ];
 
@@ -88,7 +85,7 @@ export default () => {
       const splash = await createSplash(safePath);
       const ios = await createIOSIcon(safePath, response.iconBGColor);
       const android = await createAndroidIcon(safePath, response.iconBGColor);
-      const spinner = ora(`Generating splash screen...`).start();
+      const spinner = ora('Generating splash screen...').start();
       try {
         await execa('node_modules/.bin/react-native', [
           'set-splash',
