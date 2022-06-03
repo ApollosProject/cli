@@ -7,7 +7,7 @@ import util from 'util';
 import { exec as baseExec } from 'child_process';
 import { execa } from 'execa';
 import consola from 'consola';
-import { program, Argument } from 'commander';
+import { program } from 'commander';
 
 import version from './utils/get-version.cjs';
 import makeMobileCommand from './commands/mobile/index.js';
@@ -33,14 +33,6 @@ program.version(version);
 })();
 
 program.addCommand(makeMobileCommand());
-
-const upgradeTag = new Argument('[tag]').default('latest');
-
-program
-  .command('upgrade')
-  .description('Upgrades Apollos NPM packages')
-  .addArgument(upgradeTag)
-  .action((tag) => execa(`${__dirname}/scripts/upgrade.sh`, [tag]).stdout.pipe(process.stdout));
 
 program
   .command('secrets')
