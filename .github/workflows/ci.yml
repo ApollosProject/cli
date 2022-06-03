@@ -3,10 +3,8 @@ name: CI
 on: pull_request
 
 jobs:
-  defaults:
-    runs-on: ubuntu-latest
-
   title:
+    runs-on: ubuntu-latest
     steps:
       - uses: deepakputhraya/action-pr-title@master
         with:
@@ -17,12 +15,14 @@ jobs:
           max_length: 100
 
   lint:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
       - run: yarn lint
 
   test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
