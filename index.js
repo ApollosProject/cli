@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
 import util from 'util';
 import { exec as baseExec } from 'child_process';
 import { execa } from 'execa';
@@ -10,21 +7,17 @@ import consola from 'consola';
 import { program } from 'commander';
 
 import version from './utils/get-version.cjs';
+import scriptsDir from './utils/get-scripts-dir.cjs';
 import makeMobileCommand from './commands/mobile/index.js';
 
 const exec = util.promisify(baseExec);
-
-// eslint-disable-next-line
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 program.name('apollos');
 program.version(version);
 
 // check version
 (async () => {
-  const { stdout: latest } = await execa(
-    `${__dirname}/scripts/get-latest-version.sh`,
-  );
+  const { stdout: latest } = await execa(`${scriptsDir}/get-latest-version.sh`);
   if (latest !== version) {
     consola.warn(
       `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
@@ -43,7 +36,7 @@ program
   .action((password, options) => {
     if ((options.d && options.e) || (!options.d && !options.e)) console.error('Must use either -e or -d, not both');
     if (options.d) {
-      exec(`${__dirname}/scripts/secrets.sh -d ${password}`).then(
+      exec(`${scriptsDir}/secrets.sh -d ${password}`).then(
         ({ stdout, stderr }) => {
           if (stdout) {
             console.log(stdout);
@@ -55,7 +48,7 @@ program
       );
     }
     if (options.e) {
-      exec(`${__dirname}/scripts/secrets.sh -e ${password}`).then(
+      exec(`${scriptsDir}/secrets.sh -d ${password}`).then(
         ({ stdout, stderr }) => {
           if (stdout) {
             console.log(stdout);
