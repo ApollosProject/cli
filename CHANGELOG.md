@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.17](https://github.com/apollosproject/cli/compare/v0.0.16...v0.0.17) (2022-06-03)
+
+
+### Features
+
+* adds current version checker ([aec11fe](https://github.com/apollosproject/cli/commit/aec11fe76393cc2fe6c0658ea53f3c26ab973612))
+
 ## [0.0.16](https://github.com/apollosproject/cli/compare/v0.0.15...v0.0.16) (2022-06-02)
 
 ## [0.0.15](https://github.com/apollosproject/cli/compare/v0.0.14...v0.0.15) (2022-06-02)
