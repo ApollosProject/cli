@@ -16,11 +16,13 @@ program.name('apollos');
 program.version(version);
 
 // check version
-const { stdout: latest } = execaSync(`${scriptsDir}/get-latest-version.sh`);
-if (latest !== version) {
-  consola.warn(
-    `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
-  );
+if (process.env.NODE_ENV !== 'test') {
+  const { stdout: latest } = execaSync(`${scriptsDir}/get-latest-version.sh`);
+  if (latest !== version) {
+    consola.warn(
+      `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
+    );
+  }
 }
 
 program.addCommand(makeMobileCommand());
