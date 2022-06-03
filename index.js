@@ -48,7 +48,7 @@ program
       );
     }
     if (options.e) {
-      exec(`${scriptsDir}/secrets.sh -d ${password}`).then(
+      exec(`${scriptsDir}/secrets.sh -e ${password}`).then(
         ({ stdout, stderr }) => {
           if (stdout) {
             console.log(stdout);
