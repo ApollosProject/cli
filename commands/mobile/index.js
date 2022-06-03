@@ -60,7 +60,7 @@ export default () => {
         const response = await prompts(questions);
         if (Object.keys(response).length === questions.length) {
           try {
-            execa(`${__dirname}/scripts/create-mobile.sh`, [
+            execa(`${__dirname}/../../scripts/create-mobile.sh`, [
               response.appName,
               response.iosID,
               response.androidID,
@@ -95,7 +95,7 @@ export default () => {
         const response = await prompts(questions);
         if (Object.keys(response).length === 1) {
           try {
-            execa(`${__dirname}/scripts/get-mobile-versions.sh`, [
+            execa(`${__dirname}/../../scripts/get-mobile-versions.sh`, [
               response.appleID,
             ]).stdout.pipe(process.stdout);
           } catch (e) {

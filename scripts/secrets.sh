@@ -1,4 +1,3 @@
-#!/bin/bash
 if [ $# -ne 2 ]; then
   echo "Usage: secrets.sh -e|-d KEY"
   exit 1

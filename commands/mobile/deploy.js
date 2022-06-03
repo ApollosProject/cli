@@ -86,13 +86,13 @@ export default () => {
         'Run the following commands before proceeding in a separate terminal to create the bundle identifiers:',
       );
       const { stdout } = await execa(
-        `${__dirname}/../scripts/display-ios-setup-commands.sh`,
+        `${__dirname}/../../scripts/display-ios-setup-commands.sh`,
         [appleID],
       );
       consola.log(stdout);
       const response = await prompts(questions);
       if (Object.keys(response).length === questions.length) {
-        execa(`${__dirname}/../scripts/setup-ios-deployments.sh`, [
+        execa(`${__dirname}/../../scripts/setup-ios-deployments.sh`, [
           response.certsRepo,
           response.ghUser,
           response.ghToken,
@@ -116,7 +116,7 @@ export default () => {
     .action(async (track) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track]);
+        await execa(`${__dirname}/../../scripts/deploy-ios.sh`, [track]);
       } catch (e) {
         spinner.fail('Failed');
         consola.log(e.stdout);
@@ -145,7 +145,7 @@ export default () => {
       const response = await prompts(questions);
       if (Object.keys(response).length === 1) {
         const child = execa(
-          `${__dirname}/../scripts/setup-android-deployments.sh`,
+          `${__dirname}/../../scripts/setup-android-deployments.sh`,
           [response.key],
         );
         child.stdout.pipe(process.stdout);
@@ -172,7 +172,7 @@ export default () => {
     .action(async (track, options) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-android.sh`, [
+        await execa(`${__dirname}/../../scripts/deploy-android.sh`, [
           track,
           options.offset,
         ]);
