@@ -6,8 +6,10 @@ import { fileURLToPath } from 'url';
 import util from 'util';
 import { exec as baseExec } from 'child_process';
 import { execa } from 'execa';
+import consola from 'consola';
 import { program, Argument } from 'commander';
 
+import version from './utils/get-version.cjs';
 import makeMobileCommand from './commands/mobile/index.js';
 
 const exec = util.promisify(baseExec);
@@ -16,7 +18,19 @@ const exec = util.promisify(baseExec);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 program.name('apollos');
-program.version('0.0.2');
+program.version(version);
+
+// check version
+(async () => {
+  const { stdout: latest } = await execa(
+    `${__dirname}/scripts/get-latest-version.sh`,
+  );
+  if (latest !== version) {
+    consola.warn(
+      `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
+    );
+  }
+})();
 
 program.addCommand(makeMobileCommand());
 
