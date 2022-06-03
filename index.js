@@ -2,7 +2,7 @@
 
 import util from 'util';
 import { exec as baseExec } from 'child_process';
-import { execa } from 'execa';
+import { execaSync } from 'execa';
 import consola from 'consola';
 import { program } from 'commander';
 
@@ -16,14 +16,12 @@ program.name('apollos');
 program.version(version);
 
 // check version
-(async () => {
-  const { stdout: latest } = await execa(`${scriptsDir}/get-latest-version.sh`);
-  if (latest !== version) {
-    consola.warn(
-      `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
-    );
-  }
-})();
+const { stdout: latest } = execaSync(`${scriptsDir}/get-latest-version.sh`);
+if (latest !== version) {
+  consola.warn(
+    `Apollos CLI current version: ${version}. Newer version is available: ${latest}`,
+  );
+}
 
 program.addCommand(makeMobileCommand());
 
