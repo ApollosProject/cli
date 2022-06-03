@@ -9,6 +9,7 @@ import ora from 'ora';
 
 // eslint-disable-next-line
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const SCRIPT_PATH = `${__dirname}/../../scripts/`
 
 export default () => {
   const deploy = new Command('deploy');
@@ -86,13 +87,13 @@ export default () => {
         'Run the following commands before proceeding in a separate terminal to create the bundle identifiers:',
       );
       const { stdout } = await execa(
-        `${__dirname}/../scripts/display-ios-setup-commands.sh`,
+        `${SCRIPT_PATH}/display-ios-setup-commands.sh`,
         [appleID],
       );
       consola.log(stdout);
       const response = await prompts(questions);
       if (Object.keys(response).length === questions.length) {
-        execa(`${__dirname}/../scripts/setup-ios-deployments.sh`, [
+        execa(`${SCRIPT_PATH}/setup-ios-deployments.sh`, [
           response.certsRepo,
           response.ghUser,
           response.ghToken,
@@ -116,8 +117,9 @@ export default () => {
     .action(async (track) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-ios.sh`, [track]);
+        await execa(`${SCRIPT_PATH}/deploy-ios.sh`, [track]);
       } catch (e) {
+        console.log(e)
         spinner.fail('Failed');
         consola.log(e.stdout);
         consola.log(e.stderr);
@@ -145,7 +147,7 @@ export default () => {
       const response = await prompts(questions);
       if (Object.keys(response).length === 1) {
         const child = execa(
-          `${__dirname}/../scripts/setup-android-deployments.sh`,
+          `${SCRIPT_PATH}/scripts/setup-android-deployments.sh`,
           [response.key],
         );
         child.stdout.pipe(process.stdout);
@@ -172,7 +174,7 @@ export default () => {
     .action(async (track, options) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${__dirname}/../scripts/deploy-android.sh`, [
+        await execa(`${SCRIPT_PATH}/scripts/deploy-android.sh`, [
           track,
           options.offset,
         ]);
