@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/apollosproject/cli/compare/v0.0.17...v0.1.0) (2022-06-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* removes upgrade command
+
+* removes upgrade command ([30707e7](https://github.com/apollosproject/cli/commit/30707e7dd300ad910cce828396ee5b2949453a99))
+
 ## [0.0.17](https://github.com/apollosproject/cli/compare/v0.0.16...v0.0.17) (2022-06-03)
 
 
