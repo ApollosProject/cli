@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import prompts from 'prompts';
 import { execa } from 'execa';
 
+import scriptsDir from '../../utils/get-scripts-dir.cjs';
 import logo from './logo.js';
 import makeDeployCommand from './deploy.js';
 
@@ -60,7 +61,7 @@ export default () => {
         const response = await prompts(questions);
         if (Object.keys(response).length === questions.length) {
           try {
-            execa(`${__dirname}/../../scripts/create-mobile.sh`, [
+            execa(`${scriptsDir}/create-mobile.sh`, [
               response.appName,
               response.iosID,
               response.androidID,
@@ -95,7 +96,7 @@ export default () => {
         const response = await prompts(questions);
         if (Object.keys(response).length === 1) {
           try {
-            execa(`${__dirname}/../../scripts/get-mobile-versions.sh`, [
+            execa(`${scriptsDir}/get-mobile-versions.sh`, [
               response.appleID,
             ]).stdout.pipe(process.stdout);
           } catch (e) {
