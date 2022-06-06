@@ -37,6 +37,7 @@ rm android/key.json.enc
 rm android/app/apollos.keystore.enc
 rm ios/apollos.p8.enc
 rm -rf fastlane
+mkdir fastlane
 
 CLEAN_APP=$(echo "$APP" | tr -d '[:space:]')
 npx react-native-rename "$CLEAN_APP" -b "$ANDROID_BUNDLE"
