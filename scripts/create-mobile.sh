@@ -45,10 +45,9 @@ npx react-native-rename "$CLEAN_APP" -b "$ANDROID_BUNDLE"
 sed -i "" -E "s/Apollos Church/$APP/g" app.json
 sed -i "" -E "s/Apollos Church/$APP/g" "ios/$CLEAN_APP/Info.plist"
 sed -i "" -E "s/Apollos Church/$APP/g" android/app/src/main/res/values/strings.xml
-sed -i "" -E "s/Apollos Church/$APP/g" fastlane/metadata/android/en-US/title.txt
 sed -i "" -E "s/com\.differential\.apollos/$IOS_BUNDLE/g" "ios/$CLEAN_APP/$CLEAN_APP.entitlements"
 sed -i "" -E "s/com\.differential\.apollos/$IOS_BUNDLE/g" ios/OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements
-sed -i "" -E "s/com\.differential\.apollos/$IOS_BUNDLE/g" "ios/$CLEAN_APP.xcodeproj/project.pbxproj"
+sed -i "" -E "s/com\.differential\.apollos/\"$IOS_BUNDLE\"/g" "ios/$CLEAN_APP.xcodeproj/project.pbxproj"
 sed -i "" -E "s/DEVELOPMENT_TEAM = \w+;/DEVELOPMENT_TEAM = \"\";/g" "ios/$CLEAN_APP.xcodeproj/project.pbxproj"
 sed -i "" -E "s/com\.differential\.apollos/$ANDROID_BUNDLE/g" android/app/_BUCK.txt
 
