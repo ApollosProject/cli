@@ -51,6 +51,7 @@ if [ "$TRACK" = "internal" ]; then
     skip_upload_metadata:true \
     skip_upload_images:true \
     skip_upload_screenshots:true \
+    release_status:draft \
     aab:android/app/build/outputs/bundle/release/app-release.aab \
     json_key:fastlane/google-api-key.json \
     package_name:$PACKAGE
