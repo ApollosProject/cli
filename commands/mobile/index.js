@@ -5,11 +5,13 @@ import { execa } from 'execa';
 import scriptsDir from '../../utils/get-scripts-dir.cjs';
 import logo from './logo.js';
 import makeDeployCommand from './deploy.js';
+import makeAddCommand from './add.js';
 
 export default () => {
   const mobile = new Command('mobile');
   mobile.description('Manage Apollos mobile apps');
   mobile.addCommand(makeDeployCommand());
+  mobile.addCommand(makeAddCommand());
 
   mobile
     .command('init')
