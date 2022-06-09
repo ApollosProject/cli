@@ -169,7 +169,10 @@ export default () => {
     .action(async (track, options) => {
       const spinner = ora(`Deploying to ${track}...`).start();
       try {
-        await execa(`${scriptsDir}/deploy-android.sh`, [track, options.offset]);
+        await execa(`${scriptsDir}/deploy-android.sh`, [
+          track,
+          options.versionCodeOffset,
+        ]);
       } catch (e) {
         spinner.fail('Failed');
         consola.log(e.stdout);
