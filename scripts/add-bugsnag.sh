@@ -11,7 +11,7 @@ sed -E -i "" "s/classpath(.*)/classpath\1\nclasspath\(\"com.bugsnag:bugsnag-andr
 echo "y" | npx @bugsnag/react-native-cli insert
 # npx @bugsnag/react-native-cli configure would be better
 sed -i "" "s/<\/application>/<meta-data android:name=\"com.bugsnag.android.API_KEY\" android:value=\"$KEY\" \/>\n<\/application>/g" android/app/src/main/AndroidManifest.xml
-LINE=$(grep -n "/plist" ios/Newspring/Info.plist | sed "s/:.*//")
+LINE=$(grep -n "/plist" "ios/$TARGET/Info.plist" | sed "s/:.*//")
 sed -E -i "" "$((LINE - 1))s/.*/<key>bugsnag<\/key><dict><key>apiKey<\/key><string>$KEY<\/string><\/dict><\/dict>/g" "ios/$TARGET/Info.plist"
 
 yarn eslint index.js --fix
