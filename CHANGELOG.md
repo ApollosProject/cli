@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.4](https://github.com/apollosproject/cli/compare/v0.1.3...v0.1.4) (2022-06-09)
+
+
+### Bug Fixes
+
+* sets correct android build number offset ([0a3a561](https://github.com/apollosproject/cli/commit/0a3a56131a52d3e1aaf8793e57c8d30380e66b53))
+* surround bundle ID in quotes in the case of hyphens ([450d6f6](https://github.com/apollosproject/cli/commit/450d6f645932c0b6b435707f982f0b0617dfddfb))
+
 ## [0.1.3](https://github.com/apollosproject/cli/compare/v0.1.2...v0.1.3) (2022-06-06)
 
 
