@@ -26,6 +26,13 @@ fastlane run setup_ci
 export MATCH_KEYCHAIN_NAME="fastlane_tmp_keychain"
 export MATCH_KEYCHAIN_PASSWORD=""
 
+# initialize metadata
+# TODO make sure this works first on new apps with no live version
+#if [ ! -d "fastlane/metadata/en-US" ]; then
+#fastlane deliver init \
+#--use_live_version true
+#fi
+
 if [ "$TRACK" = "internal" ]; then
   fastlane match appstore -a "$APP_ID,$APP_ID.OneSignalNotificationServiceExtension" --readonly
   fastlane run increment_build_number build_number:"$BUILD_NUMBER" xcodeproj:"ios/$TARGET.xcodeproj"
