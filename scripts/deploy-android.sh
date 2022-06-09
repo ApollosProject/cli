@@ -18,7 +18,8 @@ if [ -z "$(grep KEYSTORE_FILE .env)" ]; then
 fi
 
 COMMITS=$(git rev-list --count HEAD)
-sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $COMMITS/g" android/app/build.gradle
+VERSION_CODE=$((COMMITS + OFFSET))
+sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $VERSION_CODE/g" android/app/build.gradle
 
 PACKAGE=$(grep applicationId android/app/build.gradle | sed -E "s/.*applicationId[[:space:]]+\"(.*)\".*/\1/")
 
@@ -45,25 +46,25 @@ if [ "$TRACK" = "internal" ]; then
   fastlane run gradle task:clean project_dir:android
   fastlane run gradle task:bundle build_type:Release project_dir:android
   fastlane run supply \
-    track:$TRACK \
-    version_code:$((COMMITS + OFFSET)) \
+    track:"$TRACK" \
+    version_code:"$VERSION_CODE" \
     skip_upload_apk:true \
     skip_upload_metadata:true \
     skip_upload_images:true \
     skip_upload_screenshots:true \
     aab:android/app/build/outputs/bundle/release/app-release.aab \
     json_key:fastlane/google-api-key.json \
-    package_name:$PACKAGE
+    package_name:"$PACKAGE"
 else
   fastlane run supply \
     track:internal \
-    track_promote_to:$TRACK \
-    version_code:$((COMMITS + OFFSET)) \
+    track_promote_to:"$TRACK" \
+    version_code:"$VERSION_CODE" \
     skip_upload_apk:true \
     skip_upload_aab:true \
     skip_upload_metadata:true \
     skip_upload_images:true \
     skip_upload_screenshots:true \
     json_key:fastlane/google-api-key.json \
-    package_name:$PACKAGE
+    package_name:"$PACKAGE"
 fi
