@@ -9,6 +9,7 @@ import { program } from 'commander';
 import version from './utils/get-version.cjs';
 import scriptsDir from './utils/get-scripts-dir.cjs';
 import makeMobileCommand from './commands/mobile/index.js';
+import makeConfigCommand from './commands/config.js';
 
 const exec = util.promisify(baseExec);
 
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 program.addCommand(makeMobileCommand());
+program.addCommand(makeConfigCommand());
 
 program
   .command('secrets')
