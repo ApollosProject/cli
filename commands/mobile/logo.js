@@ -32,7 +32,7 @@ const createIOSIcon = async (logoPath, bgColor) => {
   ctx.fillRect(0, 0, 1024, 1024);
 
   const image = await loadImage(logoPath);
-  ctx.drawImage(image, 62, 62, 900, 900);
+  ctx.drawImage(image, 112, 112, 800, 800);
   const buffer = icon.toBuffer('image/png');
   const tmpobj = tmp.fileSync();
   fs.writeFileSync(tmpobj.name, buffer);
@@ -52,6 +52,30 @@ const createAndroidIcon = async (logoPath, bgColor) => {
   const tmpobj = tmp.fileSync();
   fs.writeFileSync(tmpobj.name, buffer);
   return tmpobj.name;
+};
+
+const createOnesignalIcons = async (logoPath) => {
+  const logo = await loadImage(logoPath);
+  const makeIcon = (size) => {
+    const [px, folder] = size;
+    const icon = createCanvas(px, px);
+    const ctx = icon.getContext('2d');
+    ctx.drawImage(logo, 0, 0, px, px);
+    const buffer = icon.toBuffer('image/png');
+    fs.writeFileSync(
+      `android/app/src/main/res/drawable-${folder}/ic_stat_onesignal_default.png`,
+      buffer,
+    );
+  };
+  [
+    [24, 'mdpi'],
+    [36, 'hdpi'],
+    [48, 'xhdpi'],
+    [72, 'xxhdpi'],
+    [96, 'xxxhdpi'],
+  ].forEach((size) => {
+    makeIcon(size);
+  });
 };
 
 export default () => {
@@ -110,6 +134,8 @@ export default () => {
           '--platform',
           'android',
         ]);
+        spinner.text = 'Generating Onesignal icons...';
+        await createOnesignalIcons(safePath);
       } catch (e) {
         spinner.fail('Failed');
         consola.error(e);
