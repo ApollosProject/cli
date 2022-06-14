@@ -1,5 +1,5 @@
 import { execa } from 'execa';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import prompts from 'prompts';
 import consola from 'consola';
 import ora from 'ora';
@@ -68,5 +68,48 @@ export default () => {
         spinner.succeed('Success!');
       }
     });
+
+  const churchOption = new Option(
+    '--church <slug>',
+    'specify church app to configure',
+  ).env('CHURCH');
+
+  const keyOption = new Option('--api-key <key>', 'Apollos API key').env(
+    'APOLLOS_API_KEY',
+  );
+
+  const linking = new Command('linking')
+    .description('Adds Universal and Deep Linking')
+    .action(async (options) => {
+      const questions = [
+        {
+          type: options.church ? null : 'text',
+          name: 'church',
+          message: 'Apollos API Key?',
+        },
+        {
+          type: options.apiKey ? null : 'text',
+          name: 'key',
+          message: 'Apollos API Key?',
+        },
+      ];
+
+      const response = await prompts(questions);
+      const church = options.church || response.church;
+      const key = options.apiKey || response.key;
+      if (church && key) {
+        try {
+          await execa(`${scriptsDir}/add-linking.sh`, [key, options.church]);
+        } catch (e) {
+          consola.error(e.stdout);
+          process.exit(1);
+        }
+      }
+    });
+
+  linking.addOption(churchOption);
+  linking.addOption(keyOption);
+
+  add.addCommand(linking);
   return add;
 };
