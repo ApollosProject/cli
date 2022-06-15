@@ -6,10 +6,11 @@ import { execaSync } from 'execa';
 import consola from 'consola';
 import { program } from 'commander';
 
-import version from './utils/get-version.cjs';
-import scriptsDir from './utils/get-scripts-dir.cjs';
-import makeMobileCommand from './commands/mobile/index.js';
-import makeConfigCommand from './commands/config.js';
+import './src/utils/load-env.cjs';
+import version from './src/utils/get-version.cjs';
+import scriptsDir from './src/utils/get-scripts-dir.cjs';
+import makeMobileCommand from './src/commands/mobile/index.js';
+import makeConfigCommand from './src/commands/config.js';
 
 const exec = util.promisify(baseExec);
 
