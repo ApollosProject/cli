@@ -17,6 +17,10 @@ if [ -z "$(grep KEYSTORE_FILE .env)" ]; then
   exit 1
 fi
 
+GOOGLE_MAPS_API_KEY=$(./get-config.sh "$APOLLOS_API_KEY" "$CHURCH/APP_GOOGLE_MAPS_API_KEY" |
+  sed -E "s/.*\"value\":\"(.*)\"}/\1/")
+export GOOGLE_MAPS_API_KEY
+
 COMMITS=$(git rev-list --count HEAD)
 VERSION_CODE=$((COMMITS + OFFSET))
 sed -i "" -E "s/versionCode [0-9]+\s*$/versionCode $VERSION_CODE/g" android/app/build.gradle
