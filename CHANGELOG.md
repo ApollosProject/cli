@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.5](https://github.com/apollosproject/cli/compare/v0.1.4...v0.1.5) (2022-06-22)
+
+
+### Features
+
+* adds amplitude helper ([93030a2](https://github.com/apollosproject/cli/commit/93030a2d72606e0b5ca922bc4ac4ef1c7a3b05e3))
+* adds bugsnag to third party services ([#6](https://github.com/apollosproject/cli/issues/6)) ([057cf70](https://github.com/apollosproject/cli/commit/057cf70890d72664d8e91b92934edf10724a1ab6))
+* adds config get command ([#7](https://github.com/apollosproject/cli/issues/7)) ([5abbc46](https://github.com/apollosproject/cli/commit/5abbc4651572d871105646c5c93485ea8b1c70dd))
+* adds config set command ([76eb81f](https://github.com/apollosproject/cli/commit/76eb81fb06872bcc2aa603aad73b36e379a448d3))
+* adds onesignal notification icons to logo ([38d38c0](https://github.com/apollosproject/cli/commit/38d38c08dfbfc2822b4a726c3feffac64eefb13b))
+
 ## [0.1.4](https://github.com/apollosproject/cli/compare/v0.1.3...v0.1.4) (2022-06-09)
 
 
