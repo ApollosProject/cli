@@ -172,6 +172,7 @@ export default () => {
         await execa(`${scriptsDir}/deploy-android.sh`, [
           track,
           options.versionCodeOffset,
+          scriptsDir,
         ]);
       } catch (e) {
         spinner.fail('Failed');

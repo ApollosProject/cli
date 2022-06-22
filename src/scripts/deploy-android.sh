@@ -1,5 +1,6 @@
 TRACK=$1
 OFFSET=$2
+SCRIPTS_DIR=$3
 
 if [ -n "$(git status --porcelain)" ]; then
   echo "Git status not clean!"
@@ -12,14 +13,29 @@ if [ -z "$(git rev-list --tags)" ]; then
   exit 1
 fi
 
-if [ -z "$(grep KEYSTORE_FILE .env)" ]; then
+if ! grep -q KEYSTORE_FILE .env; then
   echo "Apollos Android deployments not setup correctly!"
   exit 1
 fi
 
-GOOGLE_MAPS_API_KEY=$(./get-config.sh "$APOLLOS_API_KEY" "$CHURCH/APP_GOOGLE_MAPS_API_KEY" |
-  sed -E "s/.*\"value\":\"(.*)\"}/\1/")
-export GOOGLE_MAPS_API_KEY
+if ! grep -q GOOGLE_MAPS_API_KEY .env; then
+  if [ -z "$APOLLOS_API_KEY" ] || [ -z "$CHURCH" ]; then
+    echo "Must have APOLLOS_API_KEY and CHURCH in the environment"
+    exit 1
+  fi
+  GOOGLE_MAPS_API_KEY=$("$SCRIPTS_DIR/get-config.sh" "$APOLLOS_API_KEY" "$CHURCH/APP_GOOGLE_MAPS_API_KEY" |
+    grep value |
+    sed -E "s/.*\"value\":\"(.*)\"}/\1/")
+  if [ -z "$GOOGLE_MAPS_API_KEY" ]; then
+    "$SCRIPTS_DIR/get-config.sh" "$APOLLOS_API_KEY" "$CHURCH/APP_GOOGLE_MAPS_API_KEY"
+    echo "Couldn't get APP_GOOGLE_MAPS_API_KEY from config"
+    exit 1
+  fi
+  sed i "" "s/GOOGLE_MAPS_API_KEY=.*//g" .env
+  echo "
+  GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY" >>.env
+  export GOOGLE_MAPS_API_KEY="XXX"
+fi
 
 COMMITS=$(git rev-list --count HEAD)
 VERSION_CODE=$((COMMITS + OFFSET))
@@ -48,7 +64,8 @@ fi
 
 if [ "$TRACK" = "internal" ]; then
   fastlane run gradle task:clean project_dir:android
-  fastlane run gradle task:bundle build_type:Release project_dir:android
+  GOOGLE_MAPS_API_KEY="XXX" fastlane run gradle task:bundle build_type:Release project_dir:android
+  exit 1
   fastlane run supply \
     track:"$TRACK" \
     version_code:"$VERSION_CODE" \
