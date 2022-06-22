@@ -23,7 +23,7 @@
   },
   "standard-version": {
     "scripts": {
-      "postbump": "yarn test -t version -u && git add __tests__/__snapshots__/index.tests.js.snap && git commit -m version_snap",
+      "postbump": "yarn test -t version -u && git add src/__tests__/__snapshots__/index.tests.js.snap && git commit -m version_snap",
       "postchangelog": "sed -i \"\" \"s/### \\[/## \\[/g\" CHANGELOG.md",
       "posttag": "git push --follow-tags origin master && yarn publish . && gh-release --yes"
     }
