@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/apollosproject/cli/compare/v0.1.6...v0.2.0) (2022-07-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove mobile versions and mobile init commands
+
+* remove mobile versions and mobile init commands ([4264533](https://github.com/apollosproject/cli/commit/426453323de3303143b5ea2bbe60b7ba517d6862))
+
 ## [0.1.6](https://github.com/apollosproject/cli/compare/v0.1.5...v0.1.6) (2022-06-28)
 
 ## [0.1.5](https://github.com/apollosproject/cli/compare/v0.1.4...v0.1.5) (2022-06-22)
